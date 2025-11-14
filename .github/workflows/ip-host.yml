@@ -11,6 +11,9 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v3
-    - name: Print Host IP
+    - name: Print Private IP
       run: |
-        echo "Runner IP Address: $(hostname -I || curl -s ifconfig.me)"
+        echo "Runner Private IP Address(es): $(hostname -I || echo 'Unavailable')"
+    - name: Print Public IP
+      run: |
+        echo "Runner Public IP Address: $(curl -s ifconfig.me || echo 'Unavailable')"
