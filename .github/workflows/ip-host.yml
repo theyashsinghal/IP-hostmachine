@@ -1,4 +1,4 @@
-name: Print Host IP
+name: Print and Save Host IP Log
 
 on:
   push:
@@ -6,14 +6,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  print_ip:
+  print_and_save_ip:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository
       uses: actions/checkout@v3
-    - name: Print Private IP
+
+    - name: Append IP info to log file
       run: |
-        echo "Runner Private IP Address(es): $(hostname -I || echo 'Unavailable')"
-    - name: Print Public IP
+        TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+        PRIVATE_IPS=$(hostname -I || echo 'Unavailable')
+        PUBLIC_IP=$(curl -s ifconfig.me || echo 'Unavailable')
+        echo "[$TIMESTAMP] Private IP(s): $PRIVATE_IPS | Public IP: $PUBLIC_IP" | tee -a ip_log.txt
+
+    - name: Commit and push updated log
       run: |
-        echo "Runner Public IP Address: $(curl -s ifconfig.me || echo 'Unavailable')"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add ip_log.txt
+        git commit -m "Append IP log entry at $TIMESTAMP" || echo "No changes to commit"
+        git push
