@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # Runs at minute 0 of every hour
 
 jobs:
   print_and_save_ip:
