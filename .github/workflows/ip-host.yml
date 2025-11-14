@@ -21,11 +21,12 @@ jobs:
         PUBLIC_IP=$(curl -s ifconfig.me || echo 'Unavailable')
         echo "[$TIMESTAMP] Private IP(s): $PRIVATE_IPS | Public IP: $PUBLIC_IP" | tee -a ip_log.txt
 
-    - name: Commit and push updated log
+    - name: Commit and push updated log safely
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add ip_log.txt
         git commit -m "Append IP log entry at $TIMESTAMP" || echo "No changes to commit"
-        git pull --rebase origin main
+        git fetch origin main
+        git merge -X theirs origin/main || echo "Merge conflicts resolved preferring remote"
         git push
