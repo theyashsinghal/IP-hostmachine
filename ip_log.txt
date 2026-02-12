@@ -1997,3 +1997,4 @@
 [2026-02-12T20:25:53Z] Private IP(s): 10.1.0.251 172.17.0.1  | Public IP: 135.232.232.54
 [2026-02-12T21:26:06Z] Private IP(s): 10.1.0.20 172.17.0.1  | Public IP: 68.220.61.211
 [2026-02-12T22:23:16Z] Private IP(s): 10.1.0.80 172.17.0.1  | Public IP: upstream request timeout
+[2026-02-12T23:20:58Z] Private IP(s): 10.1.0.53 172.17.0.1  | Public IP: upstream connect error or disconnect/reset before headers. reset reason: connection timeout
