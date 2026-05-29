@@ -30,3 +30,10 @@ jobs:
         git fetch origin main
         git merge -X theirs origin/main || echo "Merge conflicts resolved preferring remote"
         git push
+
+    - name: Trigger Satya Promise Tracker Instantly
+      uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ secrets.TRACKER_DISPATCH_TOKEN }}
+        repository: raam-07/Satya-promise-tracker
+        event-type: trigger-promise-tracker
